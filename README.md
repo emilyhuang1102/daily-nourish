@@ -3,15 +3,15 @@
 繁體中文健康飲食靜態網站。依原始概念圖還原米白、橄欖綠、襯線字體、細線與低圓角卡片；桌機側欄與手機底欄。無框架、無建置、無第三方圖片或字型請求。圖片與 CSS 隨網站一起部署。
 
 ## 使用
-直接用現代瀏覽器開啟 index.html。聊天 App 附件預覽器可能不執行 JavaScript，請下載後以完整瀏覽器開啟。已獲授權公開部署：https://emilyhuang1102.github.io/daily-nourish/ 。GitHub Pages 使用 main 分支根目錄。離線使用須保留 index.html、art.css、assets/ 的相對路徑，不再是單檔。
+直接用現代瀏覽器開啟 index.html。聊天 App 附件預覽器可能不執行 JavaScript，請下載後以完整瀏覽器開啟。已獲授權公開部署：https://emilyhuang1102.github.io/daily-nourish/ 。GitHub Pages 使用 main 分支根目錄。離線使用須保留 index.html、art.css、photos.js、assets/ 的相對路徑，不再是單檔。
 
 1. 我的資料：輸入成人年齡、公式性別、身高、體重及活動量，儲存 BMR/TDEE 估計。
-2. 飲食紀錄：可拍攝/選擇照片預覽，**未串接 AI，名稱與熱量須手動輸入**。照片不傳伺服器、不持久儲存，新增完成即清除。拍攝入口行為依手機與瀏覽器而異。
+2. 飲食紀錄：可拍攝/選擇照片，**未串接 AI，名稱與熱量須手動輸入**。照片不傳伺服器；儲存時壓縮至最長邊 1280px JPEG (quality .8) 並存於 IndexedDB，記錄縮圖可點開放大。拍攝入口行為依手機與瀏覽器而異。
 3. 今日總覽：選擇日期查看已記錄熱量、筆數與 TDEE 參考。無假餐點，首次為空白。
 4. 附近吃什麼：手動輸入地點或按鈕授權定位，再開啟 Google 地圖搜尋。點擊才向 Google 傳送地點與搜尋種類；不顯示假店家或距離。
 
 ## 資料與隱私
-只有個人資料及餐點文字保存在 localStorage 的 daily-nourish-v1 鍵。照片使用暫時 object URL；定位不寫入儲存。無追蹤、後端、帳號、雲端同步。輸入以 textContent 顯示，避免將使用者文字解讀為 HTML。
+只有個人資料及餐點文字保存在 localStorage 的 daily-nourish-v1 鍵。照片 Blob 存於 IndexedDB daily-nourish-photos/photos，以餐點 id 關聯；顯示使用可撤銷 object URL。刪除餐點與清空全部也清除照片；失敗顯示提示，請使用瀏覽器網站資料管理清除。定位不寫入儲存。無追蹤、後端、帳號、雲端同步。輸入以 textContent 顯示，避免將使用者文字解讀為 HTML。
 
 所有日期紀錄均可個別刪除；「我的資料」可確認後清除全部。讀取損壞、儲存空間不足、存取被拒均有提示。這不是備份系統；無痕模式、瀏覽器清理、不同裝置或移動 HTML 路徑可能使資料遺失。共用瀏覽器的他人可能看到紀錄。
 
@@ -24,7 +24,7 @@ Mifflin–St Jeor：10×kg + 6.25×cm − 5×歲 + 性別常數（男性 +5；�
 ## 待串接（本次未實作，未假裝已有）
 - AI 食物辨識與可靠食物營養資料庫：需另確認供應商、準確性、照片傳輸同意及成本。
 - 真正即時店家 API、營業狀態、距離：目前僅地圖搜尋連結。
-- 帳號同步、資料匯出備份、照片持久化：需設計隱私與儲存機制。
+- 帳號同步、資料匯出備份：需設計隱私與儲存機制。
 
 ## 測試
 測試程式 test.cjs 需要 Node.js、playwright-core 與已安裝的 Google Chrome，僅開發測試依賴，網站本身無任何依賴。於專案目錄執行：
@@ -32,6 +32,7 @@ Mifflin–St Jeor：10×kg + 6.25×cm − 5×歲 + 性別常數（男性 +5；�
 ```sh
 npm install --no-save --package-lock=false playwright-core
 node test.cjs
+node test-photos.cjs
 ```
 
 預設使用 Google Chrome channel；若使用其他安裝位置，可設定 CHROME_PATH 為瀏覽器執行檔路徑。測試使用隔離瀏覽器 context，並非使用者真實資料。screenshots/ 存有桌機與手機全頁畫面，重新執行會更新截圖。詳細結果見 TEST-RESULTS.md。
@@ -48,4 +49,7 @@ node test.cjs
 - 頁首日期為可操作表單，空白紀錄與 AI 示意說明增加少量高度；手機仍採上下卡片和橫滑餐點，而非縮小桌機。
 
 ## 部署
-只提交本專案 index.html、art.css、assets/、測試與文件，不將上層 workspace 推送。推送 main 後等待 pages build and deployment 成功，確認公開 HTML、CSS 與每張圖片 HTTP 200。
+只提交本專案 index.html、art.css、photos.js、assets/、測試與文件，不將上層 workspace 推送。推送 main 後等待 pages build and deployment 成功，確認公開 HTML、CSS 與每張圖片 HTTP 200。
+
+## 本機照片與手機瀏覽
+手機可左右滑動示意卡、點開大圖、按關閉或 Escape 返回；自己的照片在飲食紀錄及總覽縮圖點開，與 AI 示意分開標示。輸入限制 10 MB、4000 萬像素，壓縮結果最大 2 MB；canvas 重新編碼不保留原始 EXIF。照片不跨裝置同步，瀏覽器清理／無痕／儲存壓力可能清除，請保留原始照片。沒有辨識 API 或前端 API key。

@@ -12,3 +12,6 @@ Chrome / Playwright 實際瀏覽器執行 test.cjs：PASS。
 截圖：screenshots/1440-{today,diary,nearby,profile}.png、screenshots/390-{today,diary,nearby,profile}.png。全頁截圖的固定底欄停留在當時視窗底部，屬瀏覽器 fullPage 捕捉行為。
 
 未測實體 GPS、相機、Safari/Firefox；未傳送真實位置給 Google。AI 圖片不代表真實使用者餐點。與原圖仍有茶杯背景、植物筆觸、餐廳照片及裝置字體差異，詳 README。
+
+## 手機照片追加測試
+test-photos.cjs：PASS。390px 示意圖放大與關閉、真實上傳流程的壓縮 JPEG IndexedDB 保存、重整後縮圖與大圖、Escape、刪除記錄同步刪照片、清空全部、模擬 quota 照片失敗提示均通過。測試照片以專案素材作為隔離 context 的輸入 fixture，沒有植入正式使用者紀錄。screenshots/390-photo-viewer.png 為此測試畫面。未實測實體手機相機、iOS 記憶體限制或 Safari。
