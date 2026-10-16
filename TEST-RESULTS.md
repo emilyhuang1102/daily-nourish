@@ -1,19 +1,14 @@
-# 驗證結果
+# 驗證結果 — 2026-10-16 美術整合
 
-日期：2026-10-16。環境：Linux / Google Chrome headless / Playwright，直接以 file:// 載入。
+Chrome / Playwright 實際瀏覽器執行 test.cjs：PASS。
 
-- JavaScript 以 Node vm.Script 語法解析通過。
-- 1440、1024、810、768、390、320 px 六種寬度 × 四區，共 24 組導覽及 document scrollWidth 檢查通過，無水平溢出。
-- 1440 與 390 px 四區皆產生全頁截圖（screenshots/）。人工目視桌機總覽、手機總覽與個人資料；調整手機頁首以避免標題被日期擠壓。
-- 男性 30 歲 / 175 cm / 70 kg：BMR 1648.75，畫面 1,649；久坐 TDEE 1978.5，畫面 1,979。相同女性資料 BMR 1482.75，通過。
-- 未成年年齡、空白餐名、負熱量拒絕；合法資料儲存與 reload 恢復通過。
-- PNG 上傳預覽解碼、儲存後清除預覽通過。
-- 餐點新增、600+200=800 合計、跨日期 300 kcal、重整、刪除取消/確認通過。
-- HTML 注入字串以純文字呈現，未生成 img 元素。
-- 手動位置與餐飲種類正確 URL encode 到 Google Maps Search URL。
-- 定位以測試替身確認按鈕前不呼叫、按下才呼叫、成功座標連結、手動輸入取代定位、定位失敗提示。
-- 清除全部取消/確認、localStorage 移除、損壞 JSON 提示、模擬 quota exception 後保留暫存與警告，皆通過。
-- 測試全程無 pageerror，無外部網路請求（只有 file/blob）。
+- 1440、1024、810、768、390、320px × 4 頁，共 24 組無頁面水平溢出。
+- 8 張桌機／手機全頁截圖；以 view_image 與原始概念圖比對後，修正手機標題斷行、圖示與 1024px 溢出。
+- AI 示意標示、圖片載入、照片入口、BMR 小卡及動態能量環通過新增測試。
+- 男女 BMR / TDEE、無效輸入、照片預覽及清除、餐點新增／加總／日期／重載保存／刪除與取消、XSS 文字處理均通過。
+- 手動地圖搜尋、模擬定位同意／成功／失敗、清除全部與取消、損壞儲存與 quota 失敗提示均通過。
+- 無 JavaScript pageerror；離線測試無外部網路請求。
 
-## 未驗證
-真實 GPS、手機相機與系統權限對話框、外部 Google 地圖結果、Safari/Firefox、聊天 App 預覽器、實體手機與安全區域。本次定位成功/拒絕為模擬，並未取得或傳送真實位置。照片大檔/格式錯誤分支與 localStorage.removeItem 失敗分支有實作，未在自動測試逐項觸發。非全面 WCAG 稽核。
+截圖：screenshots/1440-{today,diary,nearby,profile}.png、screenshots/390-{today,diary,nearby,profile}.png。全頁截圖的固定底欄停留在當時視窗底部，屬瀏覽器 fullPage 捕捉行為。
+
+未測實體 GPS、相機、Safari/Firefox；未傳送真實位置給 Google。AI 圖片不代表真實使用者餐點。與原圖仍有茶杯背景、植物筆觸、餐廳照片及裝置字體差異，詳 README。

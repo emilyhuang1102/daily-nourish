@@ -1,9 +1,9 @@
 # 食日誌 DAILY NOURISH
 
-單檔繁體中文健康飲食網站。米白與鼠尾草綠、內嵌餐盤 SVG；桌機側欄與手機底欄。無框架、無建置、無外部圖片或字型依賴。
+繁體中文健康飲食靜態網站。依原始概念圖還原米白、橄欖綠、襯線字體、細線與低圓角卡片；桌機側欄與手機底欄。無框架、無建置、無第三方圖片或字型請求。圖片與 CSS 隨網站一起部署。
 
 ## 使用
-直接用現代瀏覽器開啟 index.html。聊天 App 附件預覽器可能不執行 JavaScript，請下載後以完整瀏覽器開啟。正式網站可於取得授權後部署靜態 HTTPS 主機；本次未部署。
+直接用現代瀏覽器開啟 index.html。聊天 App 附件預覽器可能不執行 JavaScript，請下載後以完整瀏覽器開啟。已獲授權公開部署：https://emilyhuang1102.github.io/daily-nourish/ 。GitHub Pages 使用 main 分支根目錄。離線使用須保留 index.html、art.css、assets/ 的相對路徑，不再是單檔。
 
 1. 我的資料：輸入成人年齡、公式性別、身高、體重及活動量，儲存 BMR/TDEE 估計。
 2. 飲食紀錄：可拍攝/選擇照片預覽，**未串接 AI，名稱與熱量須手動輸入**。照片不傳伺服器、不持久儲存，新增完成即清除。拍攝入口行為依手機與瀏覽器而異。
@@ -37,3 +37,15 @@ node test.cjs
 預設使用 Google Chrome channel；若使用其他安裝位置，可設定 CHROME_PATH 為瀏覽器執行檔路徑。測試使用隔離瀏覽器 context，並非使用者真實資料。screenshots/ 存有桌機與手機全頁畫面，重新執行會更新截圖。詳細結果見 TEST-RESULTS.md。
 
 未驗證真實手機相機、實體 GPS、OS 授權 UI、Safari/Firefox 或聊天 App 內嵌預覽器；定位成功與失敗以測試替身驗證，不代表取得真實 GPS。未實際向 Google 傳送位置或開啟外部搜尋。
+
+## 美術素材（2026-10-16）
+- 餐點素材由 **GPT Image 2.5-flare** 生成，來源是已生成的四象限素材圖，本輪未再次生成。
+- 按左上／右上／左下／右下裁成 grain-bowl、oats、chicken、tofu，600×600 WebP（quality 84），四張合計約 312 KiB。
+- 桌機呈現早餐／午餐／晚餐三張，手機可橫向滑動查看四張。明示「AI 生成示意・不是你的飲食紀錄」，不當作照片辨識或使用者餐點。
+- assets/botanical.svg 為自行繪製裝飾；相機與導覽圖標是內嵌線條 SVG。未把整張 mockup 當網頁。
+- 字體優先本機 Noto Serif CJK TC / Songti TC / PMingLiU，無遠端字型下載，實際字形可能隨 OS 不同。
+- 原圖中的茶杯背景、手繪植物細節與餐廳照片未原樣重製；無真實店家資料時，改為真實搜尋入口而非虛構店名、距離或評價。初始攝取 0、BMR/TDEE 未設定為 —；不複製概念圖假數字。
+- 頁首日期為可操作表單，空白紀錄與 AI 示意說明增加少量高度；手機仍採上下卡片和橫滑餐點，而非縮小桌機。
+
+## 部署
+只提交本專案 index.html、art.css、assets/、測試與文件，不將上層 workspace 推送。推送 main 後等待 pages build and deployment 成功，確認公開 HTML、CSS 與每張圖片 HTTP 200。
